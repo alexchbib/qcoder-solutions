@@ -1,17 +1,14 @@
 """
-Problem: A1 - Generate State -|0>
+Problem: A2 - Generate State 1/sqrt(2)(|0> -|3>)
 Platform: QCoder
-Score: 100 points
+Score: 200 points
 Time Limit: 3.0s | Memory Limit: 512 MiB
 
 [Objective]
-Transform the standard ground state into a negative phase state:
-    |0>  -->  -|0>
+Implement the operation of preparing the state ∣ψ⟩=1/sqrt(2)(|0> -|3>) from the zero state on a quantum circuit qc with 2 qubits.
 
-
-[Constraints & Notes]
-- In this problem, the state with different global phase will not be considered correct.
 """
+
 
 import numpy as np
 from qiskit import QuantumCircuit
@@ -19,19 +16,13 @@ from qiskit.quantum_info import Statevector
 
 
 def solve() -> QuantumCircuit:
-    qc = QuantumCircuit(1)
-
+    qc = QuantumCircuit(2)
     # Write your code here:
-    #qc.ry(2* np.pi,0)
-
-    #or
-    qc.x(0)
-    qc.z(0)
-    qc.x(0)
-
-
+    qc.x(1)
+    qc.h(1)
+    qc.cx(1,0)
     return qc
-
+ 
 
 if __name__ == "__main__":
     qc = solve()
@@ -39,7 +30,7 @@ if __name__ == "__main__":
     print(qc.draw(output="text"))
 
     # Local Verification
-    target_state = np.array([-1.0, 0.0], dtype=complex)
+    target_state = np.array(([1.0, 0.0,0.0,-1.0])/np.sqrt(2), dtype=complex)
     final_sv = Statevector.from_instruction(qc).data
 
     print("\n--- Output Check ---")
