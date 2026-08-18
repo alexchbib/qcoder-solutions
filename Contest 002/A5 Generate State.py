@@ -1,7 +1,7 @@
 """
-Problem: A4 - Generate State 1/sqrt(2)(|0> -|2^n -1>) II
+Problem: A5 - Generate State 1/sqrt(2)(|0> -|2^n -1>) III
 Platform: QCoder
-Score: 100 points
+Score: 200 points
 Time Limit: 3.0s | Memory Limit: 512 MiB
 
 [Objective]
@@ -9,7 +9,7 @@ You are given an integer n. Implement the operation of preparing the state |ψ�
 
 [Constraints]
 2≤n≤15
-Circuit depth depth <= 10
+Circuit depth must not exceed 6 (depth <= 6).
 Global phase is ignored in judge.
 """
 
@@ -51,10 +51,10 @@ if __name__ == "__main__":
         print(f"Target statevector : {target_state}")
         print(f"Actual statevector : {final_sv}")
 
-        if np.allclose(final_sv, target_state) and qc.depth()<=10:
-            print("Status: PASS (Exact phase and amplitudes match and circuit depth less than 10)")
+        if np.allclose(final_sv, target_state) and qc.depth() <= 6:
+            print("Status: PASS (Exact phase/amplitudes match and circuit depth <= 6)")
         else:
-            print("Status: FAIL (Mismatch in phase or amplitude or depth is greater than 10)")
+            print("Status: FAIL (Mismatch in phase/amplitude or depth > 6)")
             all_passed = False
             break
         
