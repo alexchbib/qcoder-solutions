@@ -1,0 +1,9 @@
+# Quantum Computing Framework
+qiskit>=2.0.0
+qiskit-aer>=0.17.0
+
+# Scientific & Math Libraries
+numpy>=1.26.0
+scipy>=1.13.0
+matplotlib>=3.8.0
+pylatexenc>=2.10
