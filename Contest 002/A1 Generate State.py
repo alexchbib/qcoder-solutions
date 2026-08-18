@@ -13,9 +13,13 @@ Transform the standard ground state into a negative phase state:
 - In this problem, the state with different global phase will not be considered correct.
 """
 
+import sys
 import numpy as np
 from qiskit import QuantumCircuit
 from qiskit.quantum_info import Statevector
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
 
 def solve() -> QuantumCircuit:
