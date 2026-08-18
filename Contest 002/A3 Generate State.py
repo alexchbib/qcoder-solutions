@@ -1,0 +1,60 @@
+"""
+Problem: A3 - Generate State 1/sqrt(2)(|0> -|2^n -1>) I
+Platform: QCoder
+Score: 300 points
+Time Limit: 3.0s | Memory Limit: 512 MiB
+
+[Objective]
+You are given an integer n. Implement the operation of preparing the state |ψ⟩= 1/sqrt(2)(|0> -|2^n -1>) from the zero state on a quantum circuit qc with n qubits.
+
+[Constraints]
+2≤n≤15
+Global phase is ignored in judge.
+"""
+
+
+import numpy as np
+from qiskit import QuantumCircuit
+from qiskit.quantum_info import Statevector
+
+
+ 
+def solve(n: int) -> QuantumCircuit:
+    qc = QuantumCircuit(n)
+    # Write your code here:
+    qc.x(n-1)
+    qc.h(n-1)
+    for i in range(n-2,-1,-1):
+        qc.cx(n-1,i)
+    return qc
+ 
+
+if __name__ == "__main__":
+    all_passed = True
+    for n in range(2,16):
+        qc = solve(n)
+        print(f"Number of qubits: {n}")
+        print("Circuit:")
+        print(qc.draw(output="text"))
+
+        target_state = np.zeros(2**n,dtype=complex)
+        target_state[0] = 1/np.sqrt(2)
+        target_state[2**n -1] = -1/np.sqrt(2)
+        final_sv = Statevector.from_instruction(qc).data
+
+        print("\n--- Output Check ---")
+        print(f"Target statevector : {target_state}")
+        print(f"Actual statevector : {final_sv}")
+
+        if np.allclose(final_sv, target_state):
+            print("Status: PASS (Exact phase and amplitudes match)")
+        else:
+            print("Status: FAIL (Mismatch in phase or amplitude)")
+            all_passed = False
+            break
+        print("-" * 80)
+    
+    if all_passed:
+        print("ALL TESTS PASSED!")
+    else:
+        print("SOME TESTS FAILED")
